@@ -5,11 +5,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background:
-    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)),
-    url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop') center/cover;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)),
+              url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop') center/cover;
   z-index: 10;
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), filter 0.5s ease;
+  will-change: opacity, transform, filter;
 }
 
 #view-intro.blurred {
@@ -30,29 +30,13 @@
   width: 100%;
 }
 
-.intro-logo-svg {
+.intro-logo-img {
   width: 600px;
   max-width: 95%;
+  height: auto;
   margin-bottom: 20px;
+  mix-blend-mode: screen;
   filter: drop-shadow(0px 0px 25px rgba(255, 255, 255, 0.15));
-}
-
-.logo-text-astra {
-  font-family: 'Inter', sans-serif;
-  font-weight: 900;
-  font-style: italic;
-  fill: #FFFFFF;
-  font-size: 95px;
-  letter-spacing: -2px;
-}
-
-.logo-text-go {
-  font-family: 'Inter', sans-serif;
-  font-weight: 900;
-  font-style: italic;
-  fill: #FF6600;
-  font-size: 95px;
-  letter-spacing: -1px;
 }
 
 .intro-content p {

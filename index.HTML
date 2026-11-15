@@ -1,172 +1,180 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ASTRA GO · Science Journal</title>
 
-  <link rel="icon" type="image/png" href="assets/Logo espacial AstraGO con órbita luminosa.png">
-
-  <!-- Three.js & GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- CSS -->
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/intro.css">
   <link rel="stylesheet" href="css/selector.css">
   <link rel="stylesheet" href="css/journal.css">
-  <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/explorer.css">
+
+  <style>
+    .intro-logo-svg {
+      width: min(760px, 90vw);
+      height: auto;
+      display: block;
+      margin: 0 auto 20px;
+      overflow: visible;
+      will-change: transform;
+    }
+
+    .lang-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: rgba(10,10,10,0.85);
+      border: 1px solid #444;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+    .lang-toggle:hover { background: #ff4d00; border-color: #ff4d00; }
+  </style>
 </head>
 <body>
 
+  <button id="lang-toggle" class="lang-toggle" aria-label="Change language">ES</button>
+
   <!-- VISTA 1: INTRO -->
-<div id="view-intro">
-  <div class="intro-content">
-    <img class="intro-logo-svg" src="assets/logo.jpeg" alt="ASTRA GO">
-    <p>Plataforma de investigación y exploración científica para identificar zonas análogas en la Tierra, preparando el camino para futuros asentamientos en Marte y la Luna.</p>
-  </div>
-  <div class="scroll-hint" id="scroll-hint">
-    <span>Desliza para explorar</span>
-    <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-  </div>
-</div>
+  <div id="view-intro">
+    <div class="intro-content">
+      <svg class="intro-logo-svg" viewBox="0 0 1000 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ASTRA GO">
+        <defs>
+          <linearGradient id="swooshGrad" x1="15%" y1="0%" x2="55%" y2="0%">
+            <stop offset="0%" stop-color="#FFFFFF" />
+            <stop offset="48%" stop-color="#FFFFFF" />
+            <stop offset="78%" stop-color="#FF7A00" />
+            <stop offset="100%" stop-color="#FF7A00" />
+          </linearGradient>
+          <linearGradient id="goGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FF6B00" />
+            <stop offset="100%" stop-color="#FF8800" />
+          </linearGradient>
+          <mask id="orbitCutout">
+            <rect x="0" y="0" width="1000" height="320" fill="white" />
+            <path d="M 75 190 Q 140 135 235 112" stroke="black" stroke-width="14" fill="none" stroke-linecap="round" />
+            <path d="M 705 225 C 820 198, 920 155, 922 122 C 923 108, 895 103, 875 102 C 910 85, 922 65, 905 48 C 885 30, 815 40, 735 80"
+                  stroke="black" stroke-width="24" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </mask>
+        </defs>
 
-  <!-- VISTA 2: SELECTOR MARTE / LUNA -->
-  <div id="view-selector">
-    <div class="selector-header">
-      <div class="logo">ASTRA GO</div>
-      <div class="header-meta">SCIENCE JOURNAL · 2025</div>
+        <g mask="url(#orbitCutout)">
+          <text x="108" y="198" fill="#FFFFFF" font-family="'Arial Black', 'Montserrat', 'Helvetica Neue', sans-serif" font-weight="900" font-size="146" letter-spacing="-5" transform="skewX(-15) translate(55, 0)">Astra</text>
+          <text x="536" y="198" fill="url(#goGrad)" font-family="'Arial Black', 'Montserrat', 'Helvetica Neue', sans-serif" font-weight="900" font-size="148" letter-spacing="-6" transform="skewX(-15) translate(55, 0)">GO</text>
+        </g>
+
+        <path d="M 225 114 C 115 142, 32 182, 36 218 C 40 258, 185 268, 395 252 C 610 236, 845 192, 912 146 C 932 132, 932 114, 902 108 C 892 106, 882 106, 872 107 C 908 88, 926 65, 912 45 C 894 21, 822 32, 738 78 C 815 44, 878 38, 892 56 C 902 70, 882 90, 846 109 C 868 111, 888 115, 892 124 C 897 137, 865 154, 795 174 C 665 210, 445 234, 265 238 C 120 241, 64 226, 63 204 C 62 178, 125 146, 225 114 Z" fill="url(#swooshGrad)" />
+
+        <path d="M 935 32 Q 938 58 962 61 Q 938 64 935 90 Q 932 64 908 61 Q 932 58 935 32 Z" fill="#FF7A00" />
+        <path d="M 968 82 Q 970 96 983 98 Q 970 100 968 114 Q 966 100 953 98 Q 966 96 968 82 Z" fill="#FFFFFF" />
+        <path d="M 943 114 Q 945 130 960 132 Q 945 134 943 150 Q 941 134 926 132 Q 941 130 943 114 Z" fill="#FFFFFF" />
+      </svg>
+      <p data-i18n="intro.desc">Explore the confines of the solar system through scientific data, 3D visualizations, and comparative analysis of Mars and the Moon.</p>
     </div>
+    <div class="scroll-hint">
+      <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      <span data-i18n="intro.scroll">Scroll</span>
+    </div>
+  </div>
 
+  <!-- VISTA 2: SELECTOR -->
+  <section id="view-selector">
+    <button class="btn-back-nav" data-i18n="selector.back">← Back</button>
+    <header class="selector-header">
+      <span class="logo">ASTRA GO</span>
+      <span data-i18n="selector.select">SELECT MISSION TARGET</span>
+    </header>
     <div class="selector-grid">
-      <div class="panel mars" data-planet="mars">
-        <div class="panel-bg" style="background-image: url('https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=1600&auto=format&fit=crop');"></div>
-        <div class="panel-overlay"></div>
-        <div class="panel-content">
-          <div class="panel-top">
-            <span class="num">01</span>
-            <div class="icon">♂</div>
-          </div>
-          <div class="panel-middle">
-            <h2 class="panel-title">Marte</h2>
-            <p class="panel-desc">El planeta rojo. Un mundo de óxidos, tormentas de polvo y secretos geológicos esperando ser revelados.</p>
-            <button class="panel-action">Explorar <span>→</span></button>
-          </div>
-          <div class="panel-bottom">
-            <div class="stat-block"><h4>Distancia</h4><p>54.6 M km</p></div>
-            <div class="stat-block"><h4>Temperatura</h4><p>-63 °C</p></div>
-            <div class="stat-block"><h4>Gravedad</h4><p>3.71 m/s²</p></div>
-          </div>
-        </div>
-      </div>
 
-      <div class="panel moon" data-planet="moon">
-        <div class="panel-bg" style="background-image: url('https://images.unsplash.com/photo-1522030299830-16b8d3d049fe?q=80&w=1600&auto=format&fit=crop');"></div>
+      <!-- Panel Marte -->
+      <article class="panel mars">
+        <div class="panel-bg" style="background-image:url('https://th.bing.com/th/id/R.a219041f44f9a8c9d272f78c1687328d?rik=FuceP70P8O7klA&riu=http%3a%2f%2f2.bp.blogspot.com%2f-y0T6AHXt4Nk%2fVfaH33EDgHI%2fAAAAAAAAAPo%2fzr_G4e08sWk%2fs1600%2fMarte.%2bAstronomia%2by%2bcosmos.jpg&ehk=lIbmKiEaHuscc7u6TZ6e4LP5NyJYIELpfPWTa0MSToE%3d&risl=&pid=ImgRaw&r=0')"></div>
         <div class="panel-overlay"></div>
         <div class="panel-content">
-          <div class="panel-top">
-            <span class="num">02</span>
-            <div class="icon">☾</div>
-          </div>
+          <div class="panel-top"><span class="num">01</span><span class="icon">♂</span></div>
           <div class="panel-middle">
-            <h2 class="panel-title">Luna</h2>
-            <p class="panel-desc">Nuestro satélite natural. Testigo silencioso de la historia terrestre y puerta de entrada al espacio profundo.</p>
-            <button class="panel-action">Explorar <span>→</span></button>
+            <h2 class="panel-title" data-i18n="selector.mars.title">Astra Mars</h2>
+            <p class="panel-desc" data-i18n="selector.mars.desc">The red planet. Analysis of atmosphere, geology, and potential habitability.</p>
+            <button class="panel-action"><span data-i18n="selector.explore">Explore</span> <span>→</span></button>
           </div>
           <div class="panel-bottom">
-            <div class="stat-block"><h4>Distancia</h4><p>384,400 km</p></div>
-            <div class="stat-block"><h4>Temperatura</h4><p>-20 °C</p></div>
-            <div class="stat-block"><h4>Gravedad</h4><p>1.62 m/s²</p></div>
+            <div class="stat-block"><h4 data-i18n="selector.distance">Distance from Earth</h4><p>225M km</p></div>
+            <div class="stat-block"><h4 data-i18n="selector.gravity">Gravity</h4><p>3.72 m/s²</p></div>
           </div>
         </div>
-      </div>
+      </article>
+
+      <!-- Panel Luna -->
+      <article class="panel moon">
+        <div class="panel-bg" style="background-image:url('https://images.unsplash.com/photo-1522030299830-16b8d3d049fe?w=1200')"></div>
+        <div class="panel-overlay"></div>
+        <div class="panel-content">
+          <div class="panel-top"><span class="num">02</span><span class="icon">☾</span></div>
+          <div class="panel-middle">
+            <h2 class="panel-title" data-i18n="selector.moon.title">Astra Moon</h2>
+            <p class="panel-desc" data-i18n="selector.moon.desc">Our natural satellite. Study of craters, regolith, and resources.</p>
+            <button class="panel-action"><span data-i18n="selector.explore">Explore</span> <span>→</span></button>
+          </div>
+          <div class="panel-bottom">
+            <div class="stat-block"><h4 data-i18n="selector.distance">Distance from Earth</h4><p>384K km</p></div>
+            <div class="stat-block"><h4 data-i18n="selector.gravity">Gravity</h4><p>1.62 m/s²</p></div>
+          </div>
+        </div>
+      </article>
     </div>
 
-    <!-- SECCIÓN JOURNAL -->
+    <!-- SCIENCE JOURNAL -->
     <section class="journal-section">
       <div class="journal-header">
-        <h2>Astra Science Journal</h2>
-        <p>Publicaciones · Análisis · Datos</p>
+        <h2 data-i18n="journal.title">Science Journal</h2>
+        <p data-i18n="journal.subtitle">Comparative analysis · Mars vs Moon</p>
       </div>
-
       <div class="journal-grid">
         <div class="j-card">
-          <h3 class="j-title">Análisis Espectral</h3>
-          <span class="j-subtitle">Espectroscopía de reflectancia</span>
-          <p class="j-text">Estudio de la composición superficial mediante firmas espectrales obtenidas por sensores remotos.</p>
+          <h3 class="j-title" data-i18n="journal.atm.title">Atmosphere</h3>
+          <span class="j-subtitle" data-i18n="journal.atm.sub">Gaseous composition</span>
+          <p class="j-text" data-i18n="journal.atm.text">Mars has a thin CO₂ atmosphere, while the Moon lacks one.</p>
           <ul class="variable-list">
-            <li><strong>Radiación</strong><span>Flujo energético incidente y reflejado.</span></li>
-            <li><strong>Albedo</strong><span>Capacidad de reflexión superficial.</span></li>
-            <li><strong>Emisividad</strong><span>Eficiencia de emisión térmica.</span></li>
+            <li><strong>Mars</strong><span>95% CO₂</span></li>
+            <li><strong>Moon</strong><span>Exosphere</span></li>
           </ul>
-          <div class="source-badge">📡 NASA · MRO · CRISM</div>
+          <span class="source-badge">NASA · ESA</span>
         </div>
-
         <div class="j-card">
-          <h3 class="j-title">Geología Comparada</h3>
-          <span class="j-subtitle">Morfología y estratigrafía</span>
-          <p class="j-text">Comparación de estructuras geológicas entre Marte y la Luna para entender procesos planetarios.</p>
+          <h3 class="j-title" data-i18n="journal.geo.title">Geology</h3>
+          <span class="j-subtitle" data-i18n="journal.geo.sub">Surface structure</span>
+          <p class="j-text" data-i18n="journal.geo.text">Mars shows extinct volcanism; the Moon preserves ancient craters.</p>
           <ul class="variable-list">
-            <li><strong>Cráteres</strong><span>Registro de impactos meteoríticos.</span></li>
-            <li><strong>Regolito</strong><span>Capa de material fragmentado.</span></li>
-            <li><strong>Basalto</strong><span>Roca ígnea de origen volcánico.</span></li>
+            <li><strong>Mars</strong><span>Basalt + oxide</span></li>
+            <li><strong>Moon</strong><span>Regolith</span></li>
           </ul>
-          <div class="source-badge">🌍 USGS · Lunar Orbiter</div>
+          <span class="source-badge">USGS</span>
         </div>
       </div>
     </section>
-  </div>
+  </section>
 
-  <!-- VISTA 3: VARIABLES -->
-  <div id="view-variables">
-    <div id="vars-bg-glow"></div>
-    <div class="vars-header">
-      <h2>Variables</h2>
-      <p>Parámetros de estudio</p>
-    </div>
-    <div class="vars-grid" id="vars-grid"></div>
-  </div>
-
-  <!-- VISTA 4: EXPLORADOR 3D -->
-  <div id="view-explorer">
-    <div id="canvas-container"></div>
-    <div class="ex-ui">
-      <div class="ex-header">
-        <button class="btn-back" id="btn-back-explorer">← Volver</button>
-        <div class="current-mission-badge" id="mission-badge">MISIÓN: MARTE</div>
-      </div>
-
-      <div class="search-container">
-        <div class="search-box">
-          <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
-          <input type="text" id="search-input" placeholder="Buscar locación, cráter, región...">
-        </div>
-        <div class="search-results-dropdown" id="search-results"></div>
-      </div>
-
-      <div class="results-panel" id="results-panel"></div>
-      <div class="info-panel" id="info-panel"></div>
-
-      <div class="telemetry-bar">
-        <div class="tel-item"><span>LAT</span><b id="tel-lat">--</b></div>
-        <div class="tel-item"><span>LON</span><b id="tel-lon">--</b></div>
-        <div class="tel-item"><span>ALT</span><b id="tel-alt">--</b></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- JS -->
   <script src="js/main.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/intro.js"></script>
   <script src="js/selector.js"></script>
   <script src="js/journal.js"></script>
-  <script src="js/variables.js"></script>
   <script src="js/explorer.js"></script>
 </body>
 </html>

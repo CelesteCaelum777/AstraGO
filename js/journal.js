@@ -1,13 +1,14 @@
-function initJournal() {
-  const cards = document.querySelectorAll('.j-card');
-
+(function() {
+  // Animación de entrada de las tarjetas del journal
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
+        // ⚠️ OPTIMIZACIÓN: dejamos de observar una vez visible para liberar recursos
+        observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.2 });
+  }, { threshold: 0.15 });
 
-  cards.forEach(card => observer.observe(card));
-}
+  document.querySelectorAll('.j-card').forEach(card => observer.observe(card));
+})();

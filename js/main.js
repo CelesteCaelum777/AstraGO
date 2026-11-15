@@ -1,31 +1,66 @@
-// Estado global de la aplicación
-const AppState = {
-  currentPlanet: null,
+// Estado global compartido
+window.ASTRA = {
   currentView: 'intro',
-  isTransitioning: false,
+  currentTarget: 'mars', // 'mars' | 'moon'
+  varsData: {
+    mars: [],
+    moon: []
+  }
 };
 
 // Navegación entre vistas
-function showView(viewId) {
-  const views = ['view-intro', 'view-selector', 'view-variables', 'view-explorer'];
-  views.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.classList.toggle('active', id === viewId);
-      if (id === 'view-selector') el.classList.toggle('visible', id === viewId);
-      if (id === 'view-intro' && viewId !== id) el.classList.add('blurred');
-      else if (id === 'view-intro') el.classList.remove('blurred');
-    }
-  });
-  AppState.currentView = viewId;
-}
+window.ASTRA.goToIntro = () => {
+  document.getElementById('view-selector')?.classList.remove('visible');
+  document.getElementById('view-intro')?.classList.remove('blurred');
+  document.getElementById('view-variables')?.classList.remove('active');
+  document.getElementById('view-explorer')?.classList.remove('active');
+  window.ASTRA.currentView = 'intro';
+  // Scroll instantáneo para evitar demora
+  window.scrollTo({ top: 0, behavior: 'auto' });
+};
 
-// Inicialización
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('ASTRA GO · Science Journal iniciado');
-  initIntro();
-  initSelector();
-  initJournal();
-  initVariables();
-  initExplorer();
-});
+window.ASTRA.goToSelector = () => {
+  document.getElementById('view-intro')?.classList.add('blurred');
+  document.getElementById('view-selector')?.classList.add('visible');
+  document.getElementById('view-variables')?.classList.remove('active');
+  document.getElementById('view-explorer')?.classList.remove('active');
+  window.ASTRA.currentView = 'selector';
+  
+  // ⚠️ OPTIMIZACIÓN: esperamos a que la transición de opacidad (0.6s) avance
+  // y luego hacemos scroll suave controlado, sin bloquear el hilo principal
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      document.getElementById('view-selector')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  });
+};
+
+window.ASTRA.goToVariables = (target = 'mars') => {
+  window.ASTRA.currentTarget = target;
+  document.getElementById('view-selector')?.classList.remove('visible');
+  document.getElementById('view-intro')?.classList.add('blurred');
+  document.getElementById('view-variables')?.classList.add('active');
+  document.getElementById('view-explorer')?.classList.remove('active');
+  window.ASTRA.currentView = 'variables';
+  
+  const glow = document.getElementById('vars-bg-glow');
+  if (glow) {
+    glow.style.background = target === 'mars' 
+      ? 'radial-gradient(circle, #ff4d00, transparent 70%)'
+      : 'radial-gradient(circle, #00e5ff, transparent 70%)';
+  }
+  
+  window.dispatchEvent(new CustomEvent('astra:variables', { detail: { target } }));
+};
+
+window.ASTRA.goToExplorer = (target = 'mars') => {
+  window.ASTRA.currentTarget = target;
+  document.getElementById('view-variables')?.classList.remove('active');
+  document.getElementById('view-explorer')?.classList.add('active');
+  window.ASTRA.currentView = 'explorer';
+  
+  const missionEl = document.getElementById('mission-name');
+  if (missionEl) missionEl.textContent = target === 'mars' ? 'Marte' : 'Luna';
+  
+  window.dispatchEvent(new CustomEvent('astra:explorer', { detail: { target } }));
+};
