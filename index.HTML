@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASTRA GO · Science Journal</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <!-- ⬇️ AGREGADO: Montserrat a la importación de fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Montserrat:wght@300;400;600;800;900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/intro.css">
+  <link rel="stylesheet" href="css/selector.css">
+  <link rel="stylesheet" href="css/journal.css">
+  <link rel="stylesheet" href="css/explorer.css">
+
+  <style>
+    .lang-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: rgba(10,10,10,0.85);
+      border: 1px solid #444;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+    .lang-toggle:hover { background: #ff4d00; border-color: #ff4d00; }
+  </style>
+</head>
+<body>
+
+  <button id="lang-toggle" class="lang-toggle" aria-label="Change language">ES</button>
+
+  <!-- VISTA 1: INTRO -->
+  <div id="view-intro">
+    <div class="intro-content">
+      <svg class="intro-logo-svg" viewBox="0 0 1000 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ASTRA GO">
+        <defs>
+          <linearGradient id="swooshGrad" x1="15%" y1="0%" x2="55%" y2="0%">
+            <stop offset="0%" stop-color="#FFFFFF" />
+            <stop offset="48%" stop-color="#FFFFFF" />
+            <stop offset="78%" stop-color="#FF7A00" />
+            <stop offset="100%" stop-color="#FF7A00" />
+          </linearGradient>
+          <linearGradient id="goGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FF6B00" />
+            <stop offset="100%" stop-color="#FF8800" />
+          </linearGradient>
+          <mask id="orbitCutout">
+            <rect x="0" y="0" width="1000" height="320" fill="white" />
+            <path d="M 75 190 Q 140 135 235 112" stroke="black" stroke-width="14" fill="none" stroke-linecap="round" />
+            <path d="M 705 225 C 820 198, 920 155, 922 122 C 923 108, 895 103, 875 102 C 910 85, 922 65, 905 48 C 885 30, 815 40, 735 80"
+                  stroke="black" stroke-width="24" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </mask>
+        </defs>
+
+        <g mask="url(#orbitCutout)">
+          <text x="108" y="198" fill="#FFFFFF" font-family="'Arial Black', 'Montserrat', 'Helvetica Neue', sans-serif" font-weight="900" font-size="146" letter-spacing="-5" transform="skewX(-15) translate(55, 0)">Astra</text>
+          <text x="536" y="198" fill="url(#goGrad)" font-family="'Arial Black', 'Montserrat', 'Helvetica Neue', sans-serif" font-weight="900" font-size="148" letter-spacing="-6" transform="skewX(-15) translate(55, 0)">GO</text>
+        </g>
+
+        <path d="M 225 114 C 115 142, 32 182, 36 218 C 40 258, 185 268, 395 252 C 610 236, 845 192, 912 146 C 932 132, 932 114, 902 108 C 892 106, 882 106, 872 107 C 908 88, 926 65, 912 45 C 894 21, 822 32, 738 78 C 815 44, 878 38, 892 56 C 902 70, 882 90, 846 109 C 868 111, 888 115, 892 124 C 897 137, 865 154, 795 174 C 665 210, 445 234, 265 238 C 120 241, 64 226, 63 204 C 62 178, 125 146, 225 114 Z" fill="url(#swooshGrad)" />
+
+        <path d="M 935 32 Q 938 58 962 61 Q 938 64 935 90 Q 932 64 908 61 Q 932 58 935 32 Z" fill="#FF7A00" />
+        <path d="M 968 82 Q 970 96 983 98 Q 970 100 968 114 Q 966 100 953 98 Q 966 96 968 82 Z" fill="#FFFFFF" />
+        <path d="M 943 114 Q 945 130 960 132 Q 945 134 943 150 Q 941 134 926 132 Q 941 130 943 114 Z" fill="#FFFFFF" />
+      </svg>
+
+      <!-- BLOQUE DE INTRO EXTENDIDA (sin fondo, ancho completo) -->
+      <div class="intro-extended">
+        <h2 class="intro-title" data-i18n="intro.title">A Planetary Analogue Similarity Index (APSI)</h2>
+        <p class="intro-desc" data-i18n="intro.desc">AstraGo is a direct response to one of the most complex and costly challenges of modern space exploration: the validation and prior testing of technologies, rovers, and habitats destined for extreme planetary surfaces such as the Moon and Mars.</p>
+        <p class="intro-desc" data-i18n="intro.desc2">The core of the system is the Planetary Analogue Similarity Index (APSI), a mathematical model designed to evaluate, compare, and rate the degree of physical correspondence between any geographic coordinate on Earth and the real conditions of celestial bodies.</p>
+        <p class="intro-desc" data-i18n="intro.desc3">AstraGo represents a convergence between geospatial data science, edge hardware engineering, and international space exploration, providing researchers with a quantitative standard to select the best test sites on the planet.</p>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      <span data-i18n="intro.scroll">Scroll</span>
+    </div>
+  </div>
+
+  <!-- VISTA 2: SELECTOR -->
+  <section id="view-selector">
+    <button class="btn-back-nav" data-i18n="selector.back">← Back</button>
+    <header class="selector-header">
+      <span class="logo">ASTRA GO</span>
+      <span data-i18n="selector.select">SELECT MISSION TARGET</span>
+    </header>
+    <div class="selector-grid">
+
+      <!-- Panel Marte -->
+      <article class="panel mars">
+        <div class="panel-bg" style="background-image:url('https://th.bing.com/th/id/R.a219041f44f9a8c9d272f78c1687328d?rik=FuceP70P8O7klA&riu=http%3a%2f%2f2.bp.blogspot.com%2f-y0T6AHXt4Nk%2fVfaH33EDgHI%2fAAAAAAAAAPo%2fzr_G4e08sWk%2fs1600%2fMarte.%2bAstronomia%2by%2bcosmos.jpg&ehk=lIbmKiEaHuscc7u6TZ6e4LP5NyJYIELpfPWTa0MSToE%3d&risl=&pid=ImgRaw&r=0')"></div>
+        <div class="panel-overlay"></div>
+        <div class="panel-content">
+          <div class="panel-top"><span class="num">01</span><span class="icon">♂</span></div>
+          <div class="panel-middle">
+            <h2 class="panel-title" data-i18n="selector.mars.title">Astra Mars</h2>
+            <p class="panel-desc" data-i18n="selector.mars.desc">The red planet. Analysis of atmosphere, geology, and potential habitability.</p>
+            <button class="panel-action"><span data-i18n="selector.explore">Explore</span> <span>→</span></button>
+          </div>
+          <div class="panel-bottom">
+            <div class="stat-block"><h4 data-i18n="selector.distance">Distance from Earth</h4><p>225M km</p></div>
+            <div class="stat-block"><h4 data-i18n="selector.gravity">Gravity</h4><p>3.72 m/s²</p></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Panel Luna -->
+      <article class="panel moon">
+        <div class="panel-bg" style="background-image:url('https://images.unsplash.com/photo-1522030299830-16b8d3d049fe?w=1200')"></div>
+        <div class="panel-overlay"></div>
+        <div class="panel-content">
+          <div class="panel-top"><span class="num">02</span><span class="icon">☾</span></div>
+          <div class="panel-middle">
+            <h2 class="panel-title" data-i18n="selector.moon.title">Astra Moon</h2>
+            <p class="panel-desc" data-i18n="selector.moon.desc">Our natural satellite. Study of craters, regolith, and resources.</p>
+            <button class="panel-action"><span data-i18n="selector.explore">Explore</span> <span>→</span></button>
+          </div>
+          <div class="panel-bottom">
+            <div class="stat-block"><h4 data-i18n="selector.distance">Distance from Earth</h4><p>384K km</p></div>
+            <div class="stat-block"><h4 data-i18n="selector.gravity">Gravity</h4><p>1.62 m/s²</p></div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- SCIENCE JOURNAL -->
+    <section class="journal-section">
+      <div class="journal-header">
+        <h2 data-i18n="journal.title">Science Journal</h2>
+        <p data-i18n="journal.subtitle">Comparative analysis · Mars vs Moon</p>
+      </div>
+      
+      <div class="journal-grid">
+        
+        <!-- Ficha 1 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v1.title">Composición Litológica y Basáltica</h3>
+          <span class="j-subtitle" data-i18n="journal.v1.sub">Análisis Mineralógico</span>
+          <p class="j-text" data-i18n="journal.v1.text">Esta variable evalúa el tipo y la naturaleza mineralógica de las formaciones rocosas que afloran en la superficie, enfocándose en la identificación de rocas ígneas, máficas y volcánicas de tipo basáltico. Su análisis se ejecuta mediante el procesamiento de firmas de reflectancia espectral en el infrarrojo de onda corta (SWIR) utilizando datos satelitales de alta resolución de Sentinel-2 a través de plataformas como Microsoft Planetary Computer, cruzados con las unidades geológicas globales del USGS. Conocer este parámetro es fundamental porque los mares lunares y las llanuras volcánicas de Marte están dominados por basaltos; por lo tanto, encontrar análogos terrestres con composiciones mineralógicas similares permite simular de forma realista la abrasión, la dureza del terreno y el comportamiento físico al que se enfrentarán las herramientas de perforación y las ruedas de los rovers.</p>
+        </div>
+
+        <!-- Ficha 2 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v2.title">Índice de Hidratación</h3>
+          <span class="j-subtitle" data-i18n="journal.v2.sub">Presencia de Agua Estructural</span>
+          <p class="j-text" data-i18n="journal.v2.text">El índice de hidratación cuantifica la presencia de agua ligada estructuralmente en la red cristalina de minerales arcillosos, filosilicatos u óxidos hidratados, así como la sequedad extrema en los primeros centímetros del terreno. Se calcula mediante la combinación de bandas espectrales SWIR de Sentinel-2 y el monitoreo de la humedad superficial a través de modelos meteorológicos e hidrológicos abiertos. Su relevancia radica en que en los entornos planetarios hiperáridos de Marte y en la superficie expuesta de la Luna, el agua libre líquida no existe, encontrándose únicamente retenida en forma de minerales alterados químicamente; validar este índice en la Tierra garantiza que el sitio de prueba replique la verdadera aridez y el estado geoquímico superficial de los cuerpos celestes.</p>
+        </div>
+
+        <!-- Ficha 3 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v3.title">Granulometría y Distribución del Regolito</h3>
+          <span class="j-subtitle" data-i18n="journal.v3.sub">Composición del Suelo Superficial</span>
+          <p class="j-text" data-i18n="journal.v3.text">Esta variable mide la proporción porcentual de arena, limo, arcilla, fragmentos gruesos y grava, además de la densidad aparente del suelo superficial en los primeros centímetros. Se procesa de manera automatizada extrayendo los datos geoespaciales globales de la base de datos edáfica ISRIC SoilGrids v2.0 junto con lecturas de radar de apertura sintética (Sentinel-1). Su estudio es crítico para la ingeniería de movilidad planetaria, ya que la distribución del tamaño de partícula determina directamente el coeficiente de fricción, la capacidad de soporte de carga, el hundimiento de las ruedas y la generación de nubes de polvo electrostático durante el desplazamiento de vehículos de exploración.</p>
+        </div>
+
+        <!-- Ficha 4 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v4.title">Presencia de Hielo Subsuperficial</h3>
+          <span class="j-subtitle" data-i18n="journal.v4.sub">Permafrost y Criósfera</span>
+          <p class="j-text" data-i18n="journal.v4.text">Este parámetro analiza la existencia de mantos de permafrost, criosuelos estables o acumulaciones de agua congelada a poca profundidad del terreno. Se evalúa consultando las temperaturas del suelo a distintas profundidades mediante la API de Open-Meteo y detectando anomalías criogénicas e índices de nieve y escarcha (NDSI). Su conocimiento es de vital importancia estratégica para las misiones ISRU (In-Situ Resource Utilization), tanto para el diseño de hábitats permanentes en el Polo Sur lunar —donde se busca explotar los cráteres en sombra permanente— como para la planificación de excavaciones y el estudio de la dinámica térmica criogénica del subsuelo marciano.</p>
+        </div>
+
+        <!-- Ficha 5 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v5.title">Amplitud Térmica Diurna del Suelo (Día/Noche)</h3>
+          <span class="j-subtitle" data-i18n="journal.v5.sub">Oscilación Térmica</span>
+          <p class="j-text" data-i18n="journal.v5.text">Esta variable calcula la oscilación extrema de temperatura experimentada tanto por la atmósfera superficial como por la interfaz directa del suelo entre los picos máximos diurnos y las mínimas nocturnas. Se procesa mediante series temporales de la API meteorológica de Open-Meteo, extrayendo los registros térmicos de superficie. Es un factor crítico de diseño ingenieril porque la falta de una atmósfera densa en la Luna y la extrema delgadez de la atmósfera en Marte provocan fluctuaciones térmicas brutales que superan los decenas de grados en pocas horas, induciendo fatiga térmica severa, contracción de materiales y fallas mecánicas en sellos, uniones y componentes electrónicos expuestos.</p>
+        </div>
+
+        <!-- Ficha 6 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v6.title">Presión Atmosférica y Densidad del Aire</h3>
+          <span class="j-subtitle" data-i18n="journal.v6.sub">Condiciones Barométricas</span>
+          <p class="j-text" data-i18n="journal.v6.text">Este componente mide la presión barométrica real de superficie y la consecuente densidad de la masa de aire, calculada a partir de los datos meteorológicos y topográficos de Open-Meteo y modelos de elevación. Su relevancia física es indiscutible: en regiones terrestres de alta montaña (como los altiplanos y desiertos de altura), la presión desciende de forma drástica, simulando las condiciones de estrés hipobárico de la delgada atmósfera de dióxido de carbono de Marte. Esto afecta directamente la eficiencia aerodinámica, el rendimiento de los sistemas de disipación térmica por convección y el comportamiento de los paracaídas o sistemas de aterrizaje asistido.</p>
+        </div>
+
+        <!-- Ficha 7 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v7.title">Humedad Relativa del Suelo y Evapotranspiración</h3>
+          <span class="j-subtitle" data-i18n="journal.v7.sub">Contenido Hídrico Superficial</span>
+          <p class="j-text" data-i18n="journal.v7.text">Esta variable evalúa el contenido hídrico volumétrico superficial y la tasa a la cual el agua del terreno es devuelta a la atmósfera por evaporación de referencia. Se obtiene directamente de los endpoints especializados de Open-Meteo. Su control es necesario para certificar la condición de aridez extrema del análogo terrestre; un sitio de pruebas no puede considerarse válido para la simulación de ambientes planetarios si su suelo retiene humedad líquida significativa o presenta tasas de evapotranspiración propias de ecosistemas agrícolas o templados ajenos a la realidad marciana o lunar.</p>
+        </div>
+
+        <!-- Ficha 8 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v8.title">Ciclos de Congelación-Descongelación</h3>
+          <span class="j-subtitle" data-i18n="journal.v8.sub">Estabilidad Geotécnica</span>
+          <p class="j-text" data-i18n="journal.v8.text">Este indicador cuantifica la frecuencia con la que la temperatura del suelo cruza de forma repetida el umbral crítico de congelación (0ºC o 273.15 K) en ciclos diarios o estacionales. Se procesa analizando las curvas temporales horarias de la temperatura del suelo provistas por Open-Meteo. Es fundamental para determinar la estabilidad geotécnica a largo plazo de cimentaciones, anclajes de equipos y estructuras de hábitats superficiales, ya que el ciclo continuo de congelamiento y expansión del agua intersticial debilita profundamente la cohesión mecánica del regolito y fractura los materiales.</p>
+        </div>
+
+        <!-- Ficha 9 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v9.title">Radiación Ultravioleta Extrema (UV Local)</h3>
+          <span class="j-subtitle" data-i18n="journal.v9.sub">Flujo Fotónico de Alta Energía</span>
+          <p class="j-text" data-i18n="journal.v9.text">Esta variable mide el flujo fotónico de alta energía en las bandas UV-A y UV-B y el índice UV máximo que incide sobre la superficie. Se procesa mediante la integración de la API de calidad del aire de Open-Meteo y los registros geoespaciales de irradiancia de la NASA POWER. Su estudio es prioritario debido a que la ausencia de una capa de ozono densa en Marte y la total carencia de atmósfera en la Luna exponen los equipos a una radiación ultravioleta implacable que degrada rápidamente los polímeros, los sellos de goma, los tejidos de los trajes espaciales y los recubrimientos ópticos de los instrumentos científicos.</p>
+        </div>
+
+        <!-- Ficha 10 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v10.title">Aerosoles/Polvo Suspendido</h3>
+          <span class="j-subtitle" data-i18n="journal.v10.sub">Calidad del Aire y Opacidad</span>
+          <p class="j-text" data-i18n="journal.v10.text">Este parámetro cuantifica la concentración masiva de partículas minerales finas en suspensión atmosférica y la profundidad óptica de aerosoles (AOD). Se extrae consultando las bases de datos de calidad del aire y polvo mineral de CAMS a través de Open-Meteo y los modelos históricos de la NASA POWER. Conocer este factor permite simular la opacidad atmosférica constante que caracteriza a Marte (donde el polvo en suspensión afecta la visibilidad y reduce drásticamente la eficiencia de generación eléctrica de los paneles solares fotovoltaicos), validando la resistencia de los equipos ante la contaminación óptica.</p>
+        </div>
+
+        <!-- Ficha 11 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v11.title">Vector de Abrasión Eólica</h3>
+          <span class="j-subtitle" data-i18n="journal.v11.sub">Desgaste por Sandblasting</span>
+          <p class="j-text" data-i18n="journal.v11.text">Esta variable representa un índice físico compuesto que cruza la velocidad y dirección de los vientos máximos y ráfagas con la disponibilidad de partículas sueltas de arena y polvo mineral en la superficie. Se calcula combinando las series de viento de Open-Meteo con los datos de granulometría del suelo. Su importancia radica en el cálculo del desgaste mecánico acumulado por erosión eólica (efecto de arenado o sandblasting), un fenómeno erosivo severo que pule, corroe y daña los paneles solares, las lentes de las cámaras de navegación y las articulaciones expuestas de los rovers durante las tormentas de polvo.</p>
+        </div>
+
+        <!-- Ficha 12 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v12.title">Distancia Logística</h3>
+          <span class="j-subtitle" data-i18n="journal.v12.sub">Accesibilidad y Transporte</span>
+          <p class="j-text" data-i18n="journal.v12.text">Este parámetro mide la accesibilidad real por rutas, caminos de huella o distancias geodésicas desde el sitio de pruebas análogo hasta los centros urbanos, nodos de transporte o bases logísticas de apoyo más cercanos. Se procesa mediante consultas automatizadas a OpenStreetMap utilizando motores de enrutamiento como OSRM. Su evaluación es un requisito clave de ingeniería de proyectos, ya que determina la viabilidad económica y operativa para trasladar personal científico, equipos pesados de perforación, módulos habitacionales y componentes de reemplazo durante el despliegue de misiones de campo.</p>
+        </div>
+
+        <!-- Ficha 13 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v13.title">Aislamiento de Comunicaciones</h3>
+          <span class="j-subtitle" data-i18n="journal.v13.sub">Cobertura de conexión</span>
+          <p class="j-text" data-i18n="journal.v13.text">Esta variable evalúa la densidad de infraestructura de telecomunicaciones terrestres y la existencia de barreras topográficas que generan zonas de sombra o falta de cobertura celular y de red en el área. Se procesa cruzando bases de datos de antenas de telefonía con análisis de línea de vista (Line of Sight) basados en modelos de elevación digital. Su simulación es vital para probar los sistemas de autonomía de los rovers y los protocolos de retardo de telemetría y comunicación autónoma que imitan las condiciones reales de retraso espacial y pérdida de enlace directo con el control terrestre.</p>
+        </div>
+
+      </div>
+    </section>
+
+  <script src="js/main.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/intro.js"></script>
+  <script src="js/selector.js"></script>
+  <script src="js/journal.js"></script>
+  <script src="js/explorer.js"></script>
+</body>
+</html>
