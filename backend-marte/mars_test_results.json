@@ -1,0 +1,51 @@
+[
+    {
+        "endpoint": "Catálogo de variables",
+        "status": "OK",
+        "http_code": 200
+    },
+    {
+        "endpoint": "Índices MEDA",
+        "status": "OK",
+        "http_code": 200
+    },
+    {
+        "endpoint": "Productos de temperatura",
+        "status": "OK",
+        "http_code": 200
+    },
+    {
+        "endpoint": "Temperatura del aire",
+        "status": "OK",
+        "http_code": 200
+    },
+    {
+        "endpoint": "Presión atmosférica",
+        "status": "ERROR",
+        "http_code": 502,
+        "detail": "{\"detail\":\"El producto MEDA solicitado no está disponible o la fuente respondió con error: 404\"}"
+    },
+    {
+        "endpoint": "Humedad relativa",
+        "status": "ERROR",
+        "http_code": 502,
+        "detail": "{\"detail\":\"El producto MEDA solicitado no está disponible o la fuente respondió con error: 404\"}"
+    },
+    {
+        "endpoint": "Velocidad del viento",
+        "status": "ERROR",
+        "http_code": 502,
+        "detail": "{\"detail\":\"El producto MEDA solicitado no está disponible o la fuente respondió con error: 404\"}"
+    },
+    {
+        "endpoint": "Radiación",
+        "status": "OK",
+        "http_code": 200
+    },
+    {
+        "endpoint": "Temperatura infrarroja",
+        "status": "ERROR",
+        "http_code": 502,
+        "detail": "{\"detail\":\"El producto MEDA solicitado no está disponible o la fuente respondió con error: 404\"}"
+    }
+]
