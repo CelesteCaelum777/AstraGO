@@ -9,7 +9,8 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <!-- ⬇️ AGREGADO: Montserrat a la importación de fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Montserrat:wght@300;400;600;800;900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/intro.css">
@@ -18,15 +19,6 @@
   <link rel="stylesheet" href="css/explorer.css">
 
   <style>
-    .intro-logo-svg {
-      width: min(760px, 90vw);
-      height: auto;
-      display: block;
-      margin: 0 auto 20px;
-      overflow: visible;
-      will-change: transform;
-    }
-
     .lang-toggle {
       position: fixed;
       top: 20px;
@@ -85,7 +77,14 @@
         <path d="M 968 82 Q 970 96 983 98 Q 970 100 968 114 Q 966 100 953 98 Q 966 96 968 82 Z" fill="#FFFFFF" />
         <path d="M 943 114 Q 945 130 960 132 Q 945 134 943 150 Q 941 134 926 132 Q 941 130 943 114 Z" fill="#FFFFFF" />
       </svg>
-      <p data-i18n="intro.desc">Explore the confines of the solar system through scientific data, 3D visualizations, and comparative analysis of Mars and the Moon.</p>
+
+      <!-- BLOQUE DE INTRO EXTENDIDA (sin fondo, ancho completo) -->
+      <div class="intro-extended">
+        <h2 class="intro-title" data-i18n="intro.title">A Planetary Analogue Similarity Index (APSI)</h2>
+        <p class="intro-desc" data-i18n="intro.desc">AstraGo is a direct response to one of the most complex and costly challenges of modern space exploration: the validation and prior testing of technologies, rovers, and habitats destined for extreme planetary surfaces such as the Moon and Mars.</p>
+        <p class="intro-desc" data-i18n="intro.desc2">The core of the system is the Planetary Analogue Similarity Index (APSI), a mathematical model designed to evaluate, compare, and rate the degree of physical correspondence between any geographic coordinate on Earth and the real conditions of celestial bodies.</p>
+        <p class="intro-desc" data-i18n="intro.desc3">AstraGo represents a convergence between geospatial data science, edge hardware engineering, and international space exploration, providing researchers with a quantitative standard to select the best test sites on the planet.</p>
+      </div>
     </div>
     <div class="scroll-hint">
       <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
@@ -145,30 +144,102 @@
         <h2 data-i18n="journal.title">Science Journal</h2>
         <p data-i18n="journal.subtitle">Comparative analysis · Mars vs Moon</p>
       </div>
+      
       <div class="journal-grid">
+        
+        <!-- Ficha 1 -->
         <div class="j-card">
-          <h3 class="j-title" data-i18n="journal.atm.title">Atmosphere</h3>
-          <span class="j-subtitle" data-i18n="journal.atm.sub">Gaseous composition</span>
-          <p class="j-text" data-i18n="journal.atm.text">Mars has a thin CO₂ atmosphere, while the Moon lacks one.</p>
-          <ul class="variable-list">
-            <li><strong>Mars</strong><span>95% CO₂</span></li>
-            <li><strong>Moon</strong><span>Exosphere</span></li>
-          </ul>
-          <span class="source-badge">NASA · ESA</span>
+          <h3 class="j-title" data-i18n="journal.v1.title">Composición Litológica y Basáltica</h3>
+          <span class="j-subtitle" data-i18n="journal.v1.sub">Análisis Mineralógico</span>
+          <p class="j-text" data-i18n="journal.v1.text">Esta variable evalúa el tipo y la naturaleza mineralógica de las formaciones rocosas que afloran en la superficie, enfocándose en la identificación de rocas ígneas, máficas y volcánicas de tipo basáltico. Su análisis se ejecuta mediante el procesamiento de firmas de reflectancia espectral en el infrarrojo de onda corta (SWIR) utilizando datos satelitales de alta resolución de Sentinel-2 a través de plataformas como Microsoft Planetary Computer, cruzados con las unidades geológicas globales del USGS. Conocer este parámetro es fundamental porque los mares lunares y las llanuras volcánicas de Marte están dominados por basaltos; por lo tanto, encontrar análogos terrestres con composiciones mineralógicas similares permite simular de forma realista la abrasión, la dureza del terreno y el comportamiento físico al que se enfrentarán las herramientas de perforación y las ruedas de los rovers.</p>
         </div>
+
+        <!-- Ficha 2 -->
         <div class="j-card">
-          <h3 class="j-title" data-i18n="journal.geo.title">Geology</h3>
-          <span class="j-subtitle" data-i18n="journal.geo.sub">Surface structure</span>
-          <p class="j-text" data-i18n="journal.geo.text">Mars shows extinct volcanism; the Moon preserves ancient craters.</p>
-          <ul class="variable-list">
-            <li><strong>Mars</strong><span>Basalt + oxide</span></li>
-            <li><strong>Moon</strong><span>Regolith</span></li>
-          </ul>
-          <span class="source-badge">USGS</span>
+          <h3 class="j-title" data-i18n="journal.v2.title">Índice de Hidratación</h3>
+          <span class="j-subtitle" data-i18n="journal.v2.sub">Presencia de Agua Estructural</span>
+          <p class="j-text" data-i18n="journal.v2.text">El índice de hidratación cuantifica la presencia de agua ligada estructuralmente en la red cristalina de minerales arcillosos, filosilicatos u óxidos hidratados, así como la sequedad extrema en los primeros centímetros del terreno. Se calcula mediante la combinación de bandas espectrales SWIR de Sentinel-2 y el monitoreo de la humedad superficial a través de modelos meteorológicos e hidrológicos abiertos. Su relevancia radica en que en los entornos planetarios hiperáridos de Marte y en la superficie expuesta de la Luna, el agua libre líquida no existe, encontrándose únicamente retenida en forma de minerales alterados químicamente; validar este índice en la Tierra garantiza que el sitio de prueba replique la verdadera aridez y el estado geoquímico superficial de los cuerpos celestes.</p>
         </div>
+
+        <!-- Ficha 3 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v3.title">Granulometría y Distribución del Regolito</h3>
+          <span class="j-subtitle" data-i18n="journal.v3.sub">Composición del Suelo Superficial</span>
+          <p class="j-text" data-i18n="journal.v3.text">Esta variable mide la proporción porcentual de arena, limo, arcilla, fragmentos gruesos y grava, además de la densidad aparente del suelo superficial en los primeros centímetros. Se procesa de manera automatizada extrayendo los datos geoespaciales globales de la base de datos edáfica ISRIC SoilGrids v2.0 junto con lecturas de radar de apertura sintética (Sentinel-1). Su estudio es crítico para la ingeniería de movilidad planetaria, ya que la distribución del tamaño de partícula determina directamente el coeficiente de fricción, la capacidad de soporte de carga, el hundimiento de las ruedas y la generación de nubes de polvo electrostático durante el desplazamiento de vehículos de exploración.</p>
+        </div>
+
+        <!-- Ficha 4 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v4.title">Presencia de Hielo Subsuperficial</h3>
+          <span class="j-subtitle" data-i18n="journal.v4.sub">Permafrost y Criósfera</span>
+          <p class="j-text" data-i18n="journal.v4.text">Este parámetro analiza la existencia de mantos de permafrost, criosuelos estables o acumulaciones de agua congelada a poca profundidad del terreno. Se evalúa consultando las temperaturas del suelo a distintas profundidades mediante la API de Open-Meteo y detectando anomalías criogénicas e índices de nieve y escarcha (NDSI). Su conocimiento es de vital importancia estratégica para las misiones ISRU (In-Situ Resource Utilization), tanto para el diseño de hábitats permanentes en el Polo Sur lunar —donde se busca explotar los cráteres en sombra permanente— como para la planificación de excavaciones y el estudio de la dinámica térmica criogénica del subsuelo marciano.</p>
+        </div>
+
+        <!-- Ficha 5 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v5.title">Amplitud Térmica Diurna del Suelo (Día/Noche)</h3>
+          <span class="j-subtitle" data-i18n="journal.v5.sub">Oscilación Térmica</span>
+          <p class="j-text" data-i18n="journal.v5.text">Esta variable calcula la oscilación extrema de temperatura experimentada tanto por la atmósfera superficial como por la interfaz directa del suelo entre los picos máximos diurnos y las mínimas nocturnas. Se procesa mediante series temporales de la API meteorológica de Open-Meteo, extrayendo los registros térmicos de superficie. Es un factor crítico de diseño ingenieril porque la falta de una atmósfera densa en la Luna y la extrema delgadez de la atmósfera en Marte provocan fluctuaciones térmicas brutales que superan los decenas de grados en pocas horas, induciendo fatiga térmica severa, contracción de materiales y fallas mecánicas en sellos, uniones y componentes electrónicos expuestos.</p>
+        </div>
+
+        <!-- Ficha 6 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v6.title">Presión Atmosférica y Densidad del Aire</h3>
+          <span class="j-subtitle" data-i18n="journal.v6.sub">Condiciones Barométricas</span>
+          <p class="j-text" data-i18n="journal.v6.text">Este componente mide la presión barométrica real de superficie y la consecuente densidad de la masa de aire, calculada a partir de los datos meteorológicos y topográficos de Open-Meteo y modelos de elevación. Su relevancia física es indiscutible: en regiones terrestres de alta montaña (como los altiplanos y desiertos de altura), la presión desciende de forma drástica, simulando las condiciones de estrés hipobárico de la delgada atmósfera de dióxido de carbono de Marte. Esto afecta directamente la eficiencia aerodinámica, el rendimiento de los sistemas de disipación térmica por convección y el comportamiento de los paracaídas o sistemas de aterrizaje asistido.</p>
+        </div>
+
+        <!-- Ficha 7 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v7.title">Humedad Relativa del Suelo y Evapotranspiración</h3>
+          <span class="j-subtitle" data-i18n="journal.v7.sub">Contenido Hídrico Superficial</span>
+          <p class="j-text" data-i18n="journal.v7.text">Esta variable evalúa el contenido hídrico volumétrico superficial y la tasa a la cual el agua del terreno es devuelta a la atmósfera por evaporación de referencia. Se obtiene directamente de los endpoints especializados de Open-Meteo. Su control es necesario para certificar la condición de aridez extrema del análogo terrestre; un sitio de pruebas no puede considerarse válido para la simulación de ambientes planetarios si su suelo retiene humedad líquida significativa o presenta tasas de evapotranspiración propias de ecosistemas agrícolas o templados ajenos a la realidad marciana o lunar.</p>
+        </div>
+
+        <!-- Ficha 8 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v8.title">Ciclos de Congelación-Descongelación</h3>
+          <span class="j-subtitle" data-i18n="journal.v8.sub">Estabilidad Geotécnica</span>
+          <p class="j-text" data-i18n="journal.v8.text">Este indicador cuantifica la frecuencia con la que la temperatura del suelo cruza de forma repetida el umbral crítico de congelación (0ºC o 273.15 K) en ciclos diarios o estacionales. Se procesa analizando las curvas temporales horarias de la temperatura del suelo provistas por Open-Meteo. Es fundamental para determinar la estabilidad geotécnica a largo plazo de cimentaciones, anclajes de equipos y estructuras de hábitats superficiales, ya que el ciclo continuo de congelamiento y expansión del agua intersticial debilita profundamente la cohesión mecánica del regolito y fractura los materiales.</p>
+        </div>
+
+        <!-- Ficha 9 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v9.title">Radiación Ultravioleta Extrema (UV Local)</h3>
+          <span class="j-subtitle" data-i18n="journal.v9.sub">Flujo Fotónico de Alta Energía</span>
+          <p class="j-text" data-i18n="journal.v9.text">Esta variable mide el flujo fotónico de alta energía en las bandas UV-A y UV-B y el índice UV máximo que incide sobre la superficie. Se procesa mediante la integración de la API de calidad del aire de Open-Meteo y los registros geoespaciales de irradiancia de la NASA POWER. Su estudio es prioritario debido a que la ausencia de una capa de ozono densa en Marte y la total carencia de atmósfera en la Luna exponen los equipos a una radiación ultravioleta implacable que degrada rápidamente los polímeros, los sellos de goma, los tejidos de los trajes espaciales y los recubrimientos ópticos de los instrumentos científicos.</p>
+        </div>
+
+        <!-- Ficha 10 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v10.title">Aerosoles/Polvo Suspendido</h3>
+          <span class="j-subtitle" data-i18n="journal.v10.sub">Calidad del Aire y Opacidad</span>
+          <p class="j-text" data-i18n="journal.v10.text">Este parámetro cuantifica la concentración masiva de partículas minerales finas en suspensión atmosférica y la profundidad óptica de aerosoles (AOD). Se extrae consultando las bases de datos de calidad del aire y polvo mineral de CAMS a través de Open-Meteo y los modelos históricos de la NASA POWER. Conocer este factor permite simular la opacidad atmosférica constante que caracteriza a Marte (donde el polvo en suspensión afecta la visibilidad y reduce drásticamente la eficiencia de generación eléctrica de los paneles solares fotovoltaicos), validando la resistencia de los equipos ante la contaminación óptica.</p>
+        </div>
+
+        <!-- Ficha 11 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v11.title">Vector de Abrasión Eólica</h3>
+          <span class="j-subtitle" data-i18n="journal.v11.sub">Desgaste por Sandblasting</span>
+          <p class="j-text" data-i18n="journal.v11.text">Esta variable representa un índice físico compuesto que cruza la velocidad y dirección de los vientos máximos y ráfagas con la disponibilidad de partículas sueltas de arena y polvo mineral en la superficie. Se calcula combinando las series de viento de Open-Meteo con los datos de granulometría del suelo. Su importancia radica en el cálculo del desgaste mecánico acumulado por erosión eólica (efecto de arenado o sandblasting), un fenómeno erosivo severo que pule, corroe y daña los paneles solares, las lentes de las cámaras de navegación y las articulaciones expuestas de los rovers durante las tormentas de polvo.</p>
+        </div>
+
+        <!-- Ficha 12 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v12.title">Distancia Logística</h3>
+          <span class="j-subtitle" data-i18n="journal.v12.sub">Accesibilidad y Transporte</span>
+          <p class="j-text" data-i18n="journal.v12.text">Este parámetro mide la accesibilidad real por rutas, caminos de huella o distancias geodésicas desde el sitio de pruebas análogo hasta los centros urbanos, nodos de transporte o bases logísticas de apoyo más cercanos. Se procesa mediante consultas automatizadas a OpenStreetMap utilizando motores de enrutamiento como OSRM. Su evaluación es un requisito clave de ingeniería de proyectos, ya que determina la viabilidad económica y operativa para trasladar personal científico, equipos pesados de perforación, módulos habitacionales y componentes de reemplazo durante el despliegue de misiones de campo.</p>
+        </div>
+
+        <!-- Ficha 13 -->
+        <div class="j-card">
+          <h3 class="j-title" data-i18n="journal.v13.title">Aislamiento de Comunicaciones</h3>
+          <span class="j-subtitle" data-i18n="journal.v13.sub">Cobertura de conexión</span>
+          <p class="j-text" data-i18n="journal.v13.text">Esta variable evalúa la densidad de infraestructura de telecomunicaciones terrestres y la existencia de barreras topográficas que generan zonas de sombra o falta de cobertura celular y de red en el área. Se procesa cruzando bases de datos de antenas de telefonía con análisis de línea de vista (Line of Sight) basados en modelos de elevación digital. Su simulación es vital para probar los sistemas de autonomía de los rovers y los protocolos de retardo de telemetría y comunicación autónoma que imitan las condiciones reales de retraso espacial y pérdida de enlace directo con el control terrestre.</p>
+        </div>
+
       </div>
     </section>
-  </section>
 
   <script src="js/main.js"></script>
   <script src="js/i18n.js"></script>
