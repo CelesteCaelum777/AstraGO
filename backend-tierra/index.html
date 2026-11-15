@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Planetary Analog Search</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.33.0/dist/globe.gl.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-4.1.1.min.js" charset="utf-8" defer></script>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="panel left-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Parámetros climáticos</h2>
+          <span class="badge">NASA POWER</span>
+        </div>
+
+        <p class="muted">MARTE → TIERRA · Explorador climático</p>
+        <p class="muted">Referencias extremas editables. La similitud depende de los rangos y pesos; no implica equivalencia de habitabilidad.</p>
+        <label class="label" for="dataMode">Fuente de búsqueda</label>
+        <select id="dataMode" class="analytics-select"><option value="live">NASA POWER · con caché</option><option value="demo">Demostración · sin conexión</option></select>
+        <label class="label" for="parameterDisplayMode">Etiquetas de los parámetros</label>
+        <select id="parameterDisplayMode" class="analytics-select">
+          <option value="descriptive" selected>Modo Descriptivo (Español + Rangos)</option>
+          <option value="technical">Modo Técnico (Códigos NASA POWER)</option>
+        </select>
+        <div class="field-grid" id="parameters"></div>
+        <details class="additional-parameters">
+          <summary>Variables Planetarias Adicionales</summary>
+          <p id="additionalParametersNotice" class="parameter-help">Catálogo opcional. El motor actual admite solo las seis variables principales. Activar estas variables requiere ampliar el motor y las consultas NASA; por ahora no se incluyen en la búsqueda.</p>
+          <div id="additionalParameters"></div>
+        </details>
+
+        <div style="margin-top: 20px; display: grid; gap: 14px;">
+          <label class="label" for="minSimilarity">Umbral mínimo de similitud (%)</label>
+          <div class="weight-box">
+            <input id="minSimilarity" type="range" min="0" max="100" step="1" value="75" />
+            <span class="weight-value" id="minSimilarityValue">75%</span>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button class="primary" id="searchButton">Buscar Análogos Terrestres</button>
+          <div class="status-box" id="searchStatus" role="status" aria-live="polite">
+            <span class="dot-spinner"></span>
+            <span>Listo para buscar análogos.</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="center-panel">
+        <section class="globe-card">
+          <div class="globe-wrap">
+            <div id="globeViz" aria-label="Globo terráqueo interactivo"></div>
+          </div>
+        </section>
+
+        <section class="table-card">
+          <div class="panel-header" style="padding: 8px 12px 0; margin: 0;">
+            <h2 class="panel-title">Resultados coincidentes</h2>
+            <span class="badge" id="resultCountBadge">0</span>
+          </div>
+          <div class="table-wrap" style="margin-top: 10px; max-height: 100%;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ubicación</th>
+                  <th>T2M · °C</th>
+                  <th>T2M_MIN · °C</th>
+                  <th>SW_DWN · kWh/m²/día</th>
+                  <th>WS10M · m/s</th>
+                  <th>PRECTOT · mm/día</th>
+                  <th>RH2M · %</th>
+                  <th>Altitud (m)</th>
+                </tr>
+              </thead>
+              <tbody id="resultsTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+
+      <aside class="panel right-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Gráficos NASA POWER</h2>
+          <span class="badge">Viz</span>
+        </div>
+
+        <label for="vizSelector" class="label">Visualización</label><select id="vizSelector" class="analytics-select">
+          <option value="heatmaps">Mapa de Calor</option>
+          <option value="variables">Series de Variables</option>
+          <option value="trend">Tendencia Histórica</option>
+          <option value="anomalies">Anomalías Climáticas</option>
+          <option value="cycles">Ciclos Estacionales</option>
+          <option value="histograms">Histograma</option>
+          <option value="terrain">Topografía del Terreno 3D (Relieve Local)</option>
+          <option value="psychrometric">Reporte Psicrométrico</option>
+        </select>
+
+        <label for="chartVariable" class="label">Variable del gráfico</label>
+        <select id="chartVariable" class="analytics-select">
+          <option value="T2M">Temperatura promedio · T2M (°C)</option>
+          <option value="T2M_MIN">Temperatura mínima · T2M_MIN (°C)</option>
+          <option value="ALLSKY_SFC_SW_DWN">Radiación solar · ALLSKY_SFC_SW_DWN</option>
+          <option value="WS10M">Viento · WS10M (m/s)</option>
+          <option value="PRECTOTCORR">Precipitación · PRECTOTCORR (mm/día)</option>
+          <option value="RH2M">Humedad relativa · RH2M (%)</option>
+        </select>
+        <a class="nasa-viewer-button" href="https://power.larc.nasa.gov/data-access-viewer/" target="_blank" rel="noopener noreferrer">Abrir en NASA POWER Data Access Viewer ↗️</a>
+        <p id="toolkitStatus" class="muted" role="status" aria-live="polite">Seleccione una ubicación para cargar datos mensuales de NASA POWER.</p>
+        <button id="retryChart" type="button" hidden>Reintentar consulta NASA</button>
+        <div class="metric-list" id="selectedMetrics"></div>
+        <div class="iframe-shell chart-shell">
+          <div class="loading-overlay hidden" id="iframeLoading" role="status">
+            <div class="dot-spinner"></div>
+            <span id="chartLoadingMessage">Descargando datos JSON de NASA POWER…</span>
+          </div>
+          <div id="nasaFrame" role="img" aria-label="Gráfico científico interactivo de NASA POWER"></div>
+        </div>
+        <p class="chart-caption">Visualización local con Plotly · datos mensuales NASA POWER · 2015–2025. El gráfico psicrométrico compara temperatura y humedad; no es un diagrama de entalpía. Relieve: <a href="https://open-meteo.com/en/docs/elevation-api" target="_blank" rel="noopener">Open-Meteo</a> · <a href="https://doi.org/10.5270/ESA-c5d3d65" target="_blank" rel="noopener">Copernicus DEM GLO-90</a>.</p>
+      </aside>
+    </div>
+
+    <script src="/static/terrain.js" defer></script>
+    <script src="/static/charts.js" defer></script>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
