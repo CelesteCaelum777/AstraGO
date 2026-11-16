@@ -3,7 +3,7 @@
 Exploración planetaria y búsqueda de análogos climáticos terrestres.
 
 - [`AstraGo/`](AstraGo/): frontend planetario existente.
-- [`backend-tierra/`](backend-tierra/): API FastAPI para comparar siete regiones terrestres con objetivos climáticos y de elevación. Incluye una interfaz de referencia con globo 3D, gráficos NASA y relieve local.
+- [`backend-tierra/`](backend-tierra/): API FastAPI para comparar 6000 coordenadas terrestres con objetivos climáticos y de elevación. Incluye una interfaz de referencia con globo 3D, gráficos NASA y relieve local. ademas cuenta con graficos como mapa de calor, histogramas, elevacion del terreno
 
 ## Iniciar el backend Tierra
 
